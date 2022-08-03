@@ -12,27 +12,37 @@ class App extends HookConsumerWidget {
       appBar: AppBar(
         title: const Text('GraphQL Flutter Sample'),
       ),
-      body: repositories.when(
-        data: (data) {
-          final repositories = data?.viewer?.repositories?.nodes ?? [];
-          return Column(
-            children: [
-              for (final repository in repositories)
-                ListTile(
-                  title: Text(repository?.name ?? '不明'),
-                  trailing: Text(repository?.id ?? '不明'),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+        child: repositories.when(
+          data: (data) {
+            final repositories = data?.viewer?.repositories?.nodes ?? [];
+            return Column(
+              children: [
+                const Center(
+                  child: Text('リポジトリ一覧', style: TextStyle(fontSize: 24)),
                 ),
-            ],
-          );
-        },
-        error: (error, _) {
-          return Text('取得エラー: $error');
-        },
-        loading: () {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+                const ListTile(
+                  title: Text('リポジトリ名'),
+                  trailing: Text('ID'),
+                ),
+                for (final repository in repositories)
+                  ListTile(
+                    title: Text(repository?.name ?? '不明'),
+                    trailing: Text(repository?.id ?? '不明'),
+                  ),
+              ],
+            );
+          },
+          error: (error, _) {
+            return Text('取得エラー: $error');
+          },
+          loading: () {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
       ),
     );
   }
