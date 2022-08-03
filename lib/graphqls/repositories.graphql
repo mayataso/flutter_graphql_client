@@ -1,0 +1,11 @@
+query FetchRepositories($nRepositories: Int!) {
+  viewer {
+    repositories: repositories(last: $nRepositories) {
+      nodes {
+        tytpename: __typename
+        id: id
+        name: name
+      }
+    }
+  }
+}

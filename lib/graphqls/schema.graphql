@@ -1,0 +1,19 @@
+type Query {
+  query: Query
+  viewer: Viewer
+}
+
+type Viewer {
+  repositories(last: Int!): Repositories
+}
+
+type Repositories {
+  __typename: String
+  nodes: [Repository]
+}
+
+type Repository {
+  __typename: String
+  id: String
+  name: String
+}
